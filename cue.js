@@ -206,6 +206,16 @@
     }
     
     /**
+     * If the value is null, remove the attribute. Otherwise set it.
+     * @param  {Object}  node
+     * @param  {string}  k
+     * @param  {*=}      v
+     */
+    function updateAttr( node, k, v ) {
+        null == v ? node.removeAttribute(k) : node.setAttribute(k, v);
+    }
+    
+    /**
      * Parse JSON from a file or a string
      * @param  {string|*}     raw       JSON or filename of JSON file
      * @param  {Function=}    fn        Callback for ajax-loaded data.
@@ -293,11 +303,7 @@
         container.setAttribute('data-cue-idx', idx);
 
         if ( video === tagName ) {
-            if ( next[poster] == null ) {
-                media.removeAttribute(poster);
-            } else {
-                media.setAttribute(poster, next[poster]);
-            }
+            updateAttr(media, poster, next[poster]);
         }
         
         media.play();
@@ -324,10 +330,7 @@
                 attrs = parseJSON(attrs);
                 for ( n in attrs ) {
                     if ( !attrs.hasOwnProperty(n) ) { break; }
-                    key = attrs[n];
-                    if ( key && typeof key == 'string' ) {
-                        null == next[key] ? node.removeAttribute(n) : node.setAttribute(n, next[key]); 
-                    }
+                    (key = attrs[n]) && typeof key == 'string' && updateAttr(node, n, next[key]);
                 }
             }
             
