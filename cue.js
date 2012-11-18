@@ -266,7 +266,7 @@
     /**
      *
      */
-    function changeTrack ( container, nodeList, media, playlist, amount ) {
+    function changeTrack ( container, nodeList, media, tagName, playlist, amount ) {
             
         amount = amount || 0;
 
@@ -292,7 +292,13 @@
         media['src'] = next[ext] || ''; // set the attr
         container.setAttribute('data-cue-idx', idx);
 
-        next[poster] == null ? media.removeAttribute(poster) : media.setAttribute(poster, next[poster]);        
+        if ( video === tagName ) {
+            if ( next[poster] == null ) {
+                media.removeAttribute(poster);
+            } else {
+                media.setAttribute(poster, next[poster]);
+            }
+        }
         
         media.play();
 
@@ -368,6 +374,7 @@
             
             var $container = $(this)
               , $media, nodeList
+              , tagName
               , cue, media, i;
 
             cue = inputData || $container.attr('data-cue');
@@ -379,6 +386,7 @@
             // get the first video or audio elem ( ensure $media.length === 1 )
             media = $container.find(video + ',' + audio)[0];
             if ( !media ) { return; }
+            tagName = media.tagName.toLowerCase();
             $media = $(media);
             
             insertControls( $container, $media );
@@ -430,7 +438,7 @@
                     });
                     
                     // save the best type back to the 'src' prop
-                    cue[i]['src'] = getBestType( cue[i], media );
+                    cue[i]['src'] = getBestType( cue[i], tagName );
                 }
                 
                 // live reference to all elements in container
@@ -438,11 +446,11 @@
                 
                 // attach the changeTrack handlers
                 addMarkedEvent( $container, '.cue-next', 'click', function (eventData) {
-                    changeTrack( $container[0], nodeList, media, cue, 1 );
+                    changeTrack( $container[0], nodeList, media, tagName, cue, 1 );
                 });
 
                 addMarkedEvent( $container, '.cue-prev', 'click', function (eventData) {
-                    changeTrack( $container[0], nodeList, media, cue, -1 );
+                    changeTrack( $container[0], nodeList, media, tagName, cue, -1 );
                 });
 
             } else {
