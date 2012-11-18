@@ -154,6 +154,7 @@ AddType video/x-flv                    flv
 - $.fn.on()
 - $.fn.addClass()
 - $.fn.attr()
+- $.fn.children()
 - $.fn.each()
 - $.fn.empty()
 - $.fn.find()
