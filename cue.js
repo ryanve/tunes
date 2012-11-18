@@ -178,34 +178,6 @@
     }
     
     /**
-     * Test if an element supports a given attribute.
-     * @param  {Object|*}   el        is a DOM element to test on
-     * @param  {string|*}   attrName  is the name of an attribute to test for
-     * @return {boolean}
-     */
-    function elSupportsAttr ( el, attrName ) {
-        // Before this is called we know el is
-        // an element and attrName is a string.
-        var prop;
-        if ( attrName in el ) {
-            // case-sensitive check
-            // handles most scenarios
-            // e.g. elSupportsAttr(this, 'hidden')
-            // or   elSupportsAttr(this, 'contentEditable') 
-            return true;
-        }
-        for ( prop in el ) {
-            // case-insensitive check
-            // - needed to make checks for attrs like 'contenteditable' work
-            // - must omit hasOwnProperty checks to make this work in FF
-            if ( prop.toLowerCase() === attrName.toLowerCase() ) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    /**
      * ess     "each separated string"         Designed for iterating separated values. 
      *                                         Defaults to SSV. Skips falsey values.
      * @param   {Array|Object|string|*} list   is an ssv string, array, or arr-like object to iterate
