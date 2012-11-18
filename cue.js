@@ -41,6 +41,7 @@
       , audio    = 'audio'
       , video    = 'video'
       , controls = 'controls'
+      , poster = 'poster'
       , active = 'cue-active'
       , inactive = 'cue-inactive'
       , cuePaused = 'cue-paused'
@@ -290,6 +291,9 @@
         
         media['src'] = next[ext] || ''; // set the attr
         container.setAttribute('data-cue-idx', idx);
+
+        next[poster] == null ? media.removeAttribute(poster) : media.setAttribute(poster, next[poster]);        
+        
         media.play();
 
         // Update fields. - for example:  `<p data-cue-insert="caption"></p>`
