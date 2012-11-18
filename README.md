@@ -31,7 +31,7 @@ Filetypes dictate compatibility. The more types you provide, the better. View th
 
 ### [data-cue-insert]
 
-`[data-cue-insert]` makes it possible to insert values from the properties in your JSON object.
+`[data-cue-insert]` makes it possible to insert values from the properties in your media object into your HTML.
 
 ```html
 <figure data-cue="playlist.json">
@@ -43,6 +43,23 @@ Filetypes dictate compatibility. The more types you provide, the better. View th
         Caption for the default video. The value of the "caption"
         property gets inserted here when the video changes.
     </figcaption>
+</figure>
+```
+
+### [data-cue-attr]
+
+`[data-cue-attr]` makes it possible to update arbitrary HTML attributes based on the properties in your media object. It takes a JSON object that maps attribute names to the property names from the media object that should fill them.
+
+```html
+<figure data-cue="playlist.json">
+    <video controls>
+        <source src="default.mp4">
+        <source src="default.webm">
+        <p>
+            To watch this video please <a href="http://browsehappy.com">updgrade your browser</a>
+            or <a href="default.mp4" data-cue-attr='{"href": "mp4"}'>download the .mp4</a>
+        </p>
+    </video>
 </figure>
 ```
 
@@ -75,7 +92,7 @@ The format for the JSON playlist data is an array of "media objects" containing 
 }]
 ```
 
-In your media objects, you can include whatever extra properties you want for use with '[data-cue-insert]' and/or '[data-cue-attr]'. The purpose of these attributes is to enable you to include relavent credits, captions, or links.
+In your media objects, you can include whatever extra properties you want for use with `[data-cue-insert]` and/or `[data-cue-attr]`. The purpose of these attributes is to enable you to include relavent credits, captions, or links.
 
 ```json
 [{
