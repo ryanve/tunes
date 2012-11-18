@@ -108,11 +108,11 @@
       , controlsClass = 'cue-' + controls
       , controlsHtml = '<div class=' + controlsClass + '>' +
             // wrap shapes in spans so that css image replacement is possible
-            '<button accesskey=j data-cue-off class=cue-prev title=previous><span>' + lseek + '</span></button>' + 
-            '<button accesskey=p data-cue-off class=cue-play title=play/pause><span>' + play + '</span><span>' + pause + '</span></button>' + 
-            '<button accesskey=k data-cue-off class=cue-next title=next><span>' + rseek + '</span></button>' + 
+            '<button accesskey=j class=cue-prev title=previous><span>' + lseek + '</span></button>' + 
+            '<button accesskey=p class=cue-play title=play/pause><span>' + play + '</span><span>' + pause + '</span></button>' + 
+            '<button accesskey=k class=cue-next title=next><span>' + rseek + '</span></button>' + 
             //'<input class=cue-level type=range min=0 max step=0.01 value=0.00>'   + 
-            '<output data-cue-off class=cue-time></output>'                         + 
+            '<output class=cue-time></output>'                         + 
             //'<input class=cue-needle type=range min=0 max=100 step=1 value=100>'  + 
         '</div>'
       , $controls;
