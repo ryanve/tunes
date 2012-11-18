@@ -37,7 +37,6 @@
         })
         
       , singleDigits = /(^|\D)(\d\D|\d$)/g
-      , attrPrefix = /^data-cue-attr-/
 
       , audio    = 'audio'
       , video    = 'video'
@@ -176,23 +175,6 @@
         // default
         return '';
 
-    }
-    
-    function eachAttr (el, fn, dset, regex) {
-        var l, a, n, i = 0;
-        if ( !el.attributes ) { return; }
-        if ( typeof dset == 'boolean' ) {
-            regex = regex || /^data-/;
-        } else { dset = null; }
-        l = el.attributes.length;
-        while ( i < l ) {
-            if ( a = el.attributes[i++] ) {
-                n = '' + a.name;
-                if ( dset == null || regex.test(n) === dset ) {
-                    null == a.value || fn.call(el, a.value, n, a);
-                }
-            }
-        }
     }
     
     /**
@@ -366,13 +348,6 @@
                     }
                 }
             }
-            
-            /* vs:
-            eachAttr(node, function (value, name) {
-                name = attrs[name];
-                null == name || null == next[name] || node.setAttribute( name, next[name] );
-            }, true, attrPrefix);
-            */
             
         });
         
