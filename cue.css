@@ -14,7 +14,9 @@ audio, video { max-width: 100%; height: auto; }
 /* The controls have dynamic classes that give you a lot of CSS options. I recommend viewing 
    the DOM via the console while you interact with the controls to see the classes and attrs. */
  
-/* Hide disabled controls. */
+/* Hide disabled controls. Controls that are active will have the 
+   class .cue-active and controls that have been inserted but not 
+   activated with events will have the class .cue-inactive */
 .no-js .cue-controls, .cue-inactive  { display:none }
 
 /* Stylize <button>'s. */
