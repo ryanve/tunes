@@ -16,6 +16,11 @@ Filetypes dictate compatibility. The more types you provide, the better. View th
 
 [cue](http://cuejs.com) does not deal with Flash fallbacks for pre-HTML5 browsers. However fallbacks and graceful degradation are possible through smart use of `[data-cue-insert]` and `[data-cue-attr]`. A [vanilla diet](http://coding.smashingmagazine.com/2012/11/13/the-vanilla-web-diet/) approach is recommended.
 
+### URIs
+
+- To simplify the examples here, most of the file URIs shown are relative. In production you probably want to use full URIs.
+- AJAX-loaded .json files must be on the same domain due to cross-domain restrictions.
+
 ### [data-cue]
 
 `[data-cue]` is the data attribute in which the JSON playlist is stored. It is designed to be placed on a container element that holds the media element and related informational elements such as credits or captions. It can contain inline JSON **or** the filename of a .json file to load via AJAX. Inline JSON is more performant and more stable than loading AJAX requests. 
