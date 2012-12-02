@@ -12,7 +12,7 @@
 Filetypes dictate compatibility. The more types you provide, the better. View the [compatibility grid](https://developer.mozilla.org/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements#Browser_compatibility) to see possible types. To cover all modern browsers you need at least 2 types: 
 
 - **audio** - use `.mp3` and `.ogg`  - converters: [media.io](http://media.io)
-- **video** - use `.mp4` and `.webm` - converters: [Miro](http://www.mirovideoconverter.com)
+- **video** - use `.mp4` and `.webm` - converters: [ffmpeg](http://ffmpeg.org) | [Miro](http://mirovideoconverter.com) ([issues](http://stackoverflow.com/a/13449719/770127))
 
 [cue](http://cuejs.com) does not deal with Flash fallbacks for pre-HTML5 browsers. However fallbacks and graceful degradation are possible through smart use of `[data-cue-insert]` and `[data-cue-attr]`. A [vanilla diet](http://coding.smashingmagazine.com/2012/11/13/the-vanilla-web-diet/) approach is recommended.
 
