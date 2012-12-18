@@ -144,7 +144,7 @@ AddType video/x-flv                    flv
 
 ## dependencies
 
-[cue](http://cuejs.com) requires [jQuery](http://jquery.com/) 1.7+ or an [ender](http://ender.no.de/) build that implements compatible versions of:
+[cue](http://cuejs.com) requires [jQuery](http://jquery.com/) 1.7+ or an [ender](http://ender.jit.su/) build that implements compatible versions of:
 
 - $()
 - $.ajax() (needed only if using AJAX-loaded playlists)
