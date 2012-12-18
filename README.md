@@ -1,7 +1,11 @@
 # [cue](http://cuejs.com)
 ## native `<audio>` and `<video>` playlists
 
-[cue](http://cuejs.com) is an opensource [jQuery](http://jquery.com/) plugin that uses [JSON](http://en.wikipedia.org/wiki/JSON) and [data attributes](http://dev.opera.com/articles/view/an-introduction-to-datasets/) to provide playlist capabilities to native HTML5 audio and video. It aims to:
+[**cue**](http://cuejs.com) is an opensource [jQuery](http://jquery.com/) plugin that uses [JSON](http://en.wikipedia.org/wiki/JSON) and [data attributes](http://dev.opera.com/articles/view/an-introduction-to-datasets/) to provide playlist capabilities to native HTML5 audio and video.
+
+**[CDN](http://airve.github.com)**: [dev](http://airve.github.com/js/cue/cue.js) | [min](http://airve.github.com/js/cue/cue.min.js)
+
+### project goals
 
 1. Provide semantic storage and performant access to playlist data.
 2. Provide succinct semantic controls that can be styled in [CSS](https://github.com/ryanve/cue/blob/master/cue.css).
