@@ -19,8 +19,8 @@ audio, video { max-width: 100%; height: auto; }
    activated with events will have the class .cue-inactive */
 .no-js .cue-controls, .cue-inactive  { display:none }
 
-/* Stylize <button>'s. */
-.cue-controls button { background:#000; color: #fff; margin:0; border:0; padding:.5em; }
+/* Stylize buttons and outputs. */
+.cue-controls button, .cue-controls output { background:#000; color: #fff; margin:0; border:0; padding:.5em; }
 .cue-controls button:hover { background:#fff; color: #000; }
 
 /* Specific controls. Play and pause are designed to be the same element. It has
