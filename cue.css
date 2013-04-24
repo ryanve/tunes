@@ -1,15 +1,15 @@
 /*!
- * cue.css   CSS suggestions for cue.js
- * @author   Ryan Van Etten <@ryanve>
- * @license  CC0
- * @link     cuejs.com
+ * cue.css   suggested styles cue.js
+ * @version  2013.04.24
+ * @link     github.com/ryanve/cue
+ * @license  MIT
  */
 
 /* Fix videos that bounce vertically. */
-video { vertical-align: baseline }
+video { vertical-align:baseline }
 
 /* Responsiveness ( see: css3base.com/css/fit.css ) */
-audio, video { max-width: 100%; height: auto; }
+audio, video { max-width:100%; height:auto; }
 
 /* The controls have dynamic classes that give you a lot of CSS options. I recommend viewing 
    the DOM via the console while you interact with the controls to see the classes and attrs. */
@@ -19,7 +19,7 @@ audio, video { max-width: 100%; height: auto; }
    activated with events will have the class .cue-inactive */
 .no-js .cue-controls, .cue-inactive  { display:none }
 
-/* Stylize buttons and outputs. */
+/* Stylize <button>'s. */
 .cue-controls button, .cue-controls output { background:#000; color: #fff; margin:0; border:0; padding:.5em; }
 .cue-controls button:hover { background:#fff; color: #000; }
 
