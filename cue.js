@@ -3,7 +3,7 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.x
+ * @version   0.5.0
  * @requires  jQuery or ender
  */
 
