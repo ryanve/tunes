@@ -3,7 +3,7 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.5.0
+ * @version   0.5.1
  * @requires  jQuery or ender
  */
 
@@ -18,7 +18,6 @@
     var require = root['require']
       , jQuery = root['jQuery'] || (!!require && require('jquery'))
       , $ = jQuery || root['ender'] || (!!require && require('ender'))
-      , isArray = Array.isArray || $['isArray'] || (!!$['is'] && $['is']['Array']) 
       , each = $['each']
       
       , trimmer = /^\s+|\s+$/
@@ -371,7 +370,7 @@
             if (!cue) { return; }
             cue = json(cue, effinCue, $container);
             if (typeof cue != 'object') { return; } // async OR junk input
-            cue = !cue ? [] : isArray(cue) ? cue : [cue];
+            cue = cue ? [].concat(cue) : [];
             
             // get the first video or audio elem (ensure $media.length === 1)
             media = $container.find(video + ',' + audio)[0];
@@ -408,9 +407,8 @@
                     // unique type. Reset src in the process to ensure it 
                     // is string|undefined for fallback usage in getBestType.
                     if (srcs = cue[i]['src']) {
-                        srcs = isArray(srcs) ? srcs : srcs.split(' ');
-                        j = srcs.length;
-                        while (j--) {
+                        srcs = typeof srcs == 'string' ? srcs.split(' ') : srcs;
+                        for (j = srcs.length; j--; ) {
                             srcs[j] && (ext = srcs[j].split('.').pop()) && (cue[i][ext] = cue[i][ext] || srcs[j]);
                         }
                         srcs = srcs[0];
