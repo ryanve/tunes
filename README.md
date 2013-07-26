@@ -1,17 +1,17 @@
 # [cue](http://cuejs.com)
-## native `<audio>` and `<video>` playlists
+## Native `<audio>` and `<video>` Playlists
 
-[**cue**](http://cuejs.com) is an opensource [jQuery](http://jquery.com/) plugin that uses [JSON](http://en.wikipedia.org/wiki/JSON) and [data attributes](http://dev.opera.com/articles/view/an-introduction-to-datasets/) to provide playlist capabilities to native HTML5 audio and video.
+[**cue**](http://cuejs.com) is an opensource [jQuery](http://jquery.com) plugin that uses [JSON](http://en.wikipedia.org/wiki/JSON) and [data attributes](http://dev.opera.com/articles/view/an-introduction-to-datasets/) to provide playlist capabilities to native HTML5 audio and video.
 
 **[CDN](http://airve.github.com)**: [dev](http://airve.github.com/js/cue/cue.js) | [min](http://airve.github.com/js/cue/cue.min.js)
 
-### project goals
+### Goals
 
 1. Provide semantic storage and performant access to playlist data.
 2. Provide succinct semantic controls that can be styled in [CSS](https://github.com/ryanve/cue/blob/master/cue.css).
 3. Be minimal, but very extendable.
 
-### types
+### Types
 
 Filetypes dictate compatibility. The more types you provide, the better. View the [compatibility grid](https://developer.mozilla.org/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements#Browser_compatibility) to see possible types. To cover all modern browsers you need at least 2 types: 
 
@@ -136,7 +136,7 @@ AddType video/webm                     webm
 AddType video/x-flv                    flv
 ```
 
-## troubleshooting
+## Troubleshooting
 
 1. Does your JSON validate? Use: [jsonlint.com](http://jsonlint.com)
 2. Does your HTML validate? Use: [html5.validator.nu](http://html5.validator.nu)
@@ -146,29 +146,29 @@ AddType video/x-flv                    flv
 6. Are your URIs correct? AJAX-loaded playlists must be on the same server.
 7. Ask [@ryanve](http://twitter.com/ryanve) or [submit an issue](https://github.com/ryanve/cue/issues).
 
-## dependencies
+## Dependencies
 
 [cue](http://cuejs.com) requires [jQuery](http://jquery.com/) 1.7+ or an [ender](http://ender.jit.su/) build that implements compatible versions of:
 
-- $()
-- $.ajax() (needed only if using AJAX-loaded playlists)
-- $.contains()
-- $.each()
-- $.get()  (needed only if using AJAX-loaded playlists)
-- $.fn.on()
-- $.fn.addClass()
-- $.fn.attr()
-- $.fn.children()
-- $.fn.each()
-- $.fn.empty()
-- $.fn.find()
-- $.fn.html()
-- $.fn.insertAfter()
-- $.fn.ready()
-- $.fn.removeAttr()
-- $.fn.removeClass()
+- `$()`
+- `$.ajax()` (needed only if using AJAX-loaded playlists)
+- `$.contains()`
+- `$.each()`
+- `$.get()`  (needed only if using AJAX-loaded playlists)
+- `$.fn.on()`
+- `$.fn.addClass()`
+- `$.fn.attr()`
+- `$.fn.children()`
+- `$.fn.each()`
+- `$.fn.empty()`
+- `$.fn.find()`
+- `$.fn.html()`
+- `$.fn.insertAfter()`
+- `$.fn.ready()`
+- `$.fn.removeAttr()`
+- `$.fn.removeClass()`
 
-## resources
+## Resources
 
 - [html5rocks.com: HTML5 Video](http://www.html5rocks.com/en/tutorials/video/basics/)
 - [dev.opera.com: HTML5 Video and Audio](http://dev.opera.com/articles/view/everything-you-need-to-know-about-html5-video-and-audio/)
@@ -176,26 +176,8 @@ AddType video/x-flv                    flv
 - [MDN: Media Events](https://developer.mozilla.org/en-US/docs/DOM/Media_events)
 - [MDN: HTMLMediaElement](https://developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement)
 
-## license
+## License
 
 ### [cue](http://github.com/ryanve/cue) is available under the [MIT license](http://en.wikipedia.org/wiki/MIT_License)
 
 Copyright (C) 2012 by [Ryan Van Etten](https://github.com/ryanve)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
