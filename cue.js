@@ -85,11 +85,11 @@
                 if (el[canPlayType]) {
                     o = types[name];
                     for (type in o) {
-                        if (!o.hasOwnProperty(type)) { break; } // owned props enumerate 1st
+                        if (!o.hasOwnProperty(type)) break; // owned props enumerate 1st
                         i = o[type].length; // m4a has 2 tests and the rest have 1
                         while (i--) {
                             test = el[canPlayType](o[type][i]);
-                            if (supported[name][type] = !!test && 'no' !== test && test) {// <== string|false
+                            if (supported[name][type] = 'no' !== test && test || false) {
                                 supported[name]['maybe' === test ? 'push' : 'unshift'](type);
                                 break;
                             }
