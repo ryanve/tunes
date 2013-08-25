@@ -14,7 +14,8 @@
     // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
     // developer.mozilla.org/en-US/docs/DOM/Media_events
 
-    var require = root['require']
+    var $controls
+      , require = root['require']
       , jQuery = root['jQuery'] || (!!require && require('jquery'))
       , $ = jQuery || root['ender'] || (!!require && require('ender'))
       , trim = $['trim'] || function(s) {
@@ -24,9 +25,9 @@
       , parseJSON = $['parseJSON'] || nativeJSONParse && function(s) {
             return typeof s == 'string' && (s = trim(s)) ? nativeJSONParse(s) : null;
         }
-      , audio    = 'audio'
-      , video    = 'video'
-      , controls = 'controls'
+      , singleDigits = /(^|\D)(\d\D|\d$)/g
+      , audio = 'audio'
+      , video = 'video'
       , poster = 'poster'
       , active = 'cue-active'
       , inactive = 'cue-inactive'
@@ -38,7 +39,17 @@
       , pause = '| |'
       , rseek = '&#9658;&#9658;|'
       , lseek = '|&#9668;&#9668;'
-      , singleDigits = /(^|\D)(\d\D|\d$)/g
+      , controls = 'controls'
+      , controlsClass = 'cue-' + controls
+      , controlsHtml = '<div class=' + controlsClass + '>' +
+            // wrap shapes in spans so that css image replacement is possible
+            '<button accesskey=j class=cue-prev title=previous><span>' + lseek + '</span></button>' + 
+            '<button accesskey=p class=cue-play title=play/pause><span>' + play + '</span><span>' + pause + '</span></button>' + 
+            '<button accesskey=k class=cue-next title=next><span>' + rseek + '</span></button>' + 
+            //'<input class=cue-level type=range min=0 max step=0.01 value=0.00>'   + 
+            '<output class=cue-time></output>'                         + 
+            //'<input class=cue-needle type=range min=0 max=100 step=1 value=100>'  + 
+        '</div>'
       , supported = (function(supported, tags) {
             // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
             // developer.mozilla.org/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements
@@ -70,19 +81,7 @@
                 }
             });
             return supported;
-        }({}, [audio, video]))
-
-      , controlsClass = 'cue-' + controls
-      , controlsHtml = '<div class=' + controlsClass + '>' +
-            // wrap shapes in spans so that css image replacement is possible
-            '<button accesskey=j class=cue-prev title=previous><span>' + lseek + '</span></button>' + 
-            '<button accesskey=p class=cue-play title=play/pause><span>' + play + '</span><span>' + pause + '</span></button>' + 
-            '<button accesskey=k class=cue-next title=next><span>' + rseek + '</span></button>' + 
-            //'<input class=cue-level type=range min=0 max step=0.01 value=0.00>'   + 
-            '<output class=cue-time></output>'                         + 
-            //'<input class=cue-needle type=range min=0 max=100 step=1 value=100>'  + 
-        '</div>'
-      , $controls;
+        }({}, [audio, video]));
 
     /**
      * @param  {Object|Array|NodeList} ob
@@ -106,19 +105,17 @@
           , hours = minutes / 60
           , frames = 60 * seconds
           , result; 
-        
+
         // bit.ly/arithmetic-operators
         hours   = hours.toFixed();
         minutes = (minutes % 60).toFixed();
         seconds = (seconds % 60).toFixed();
         frames  = (frames % 60).toFixed();
-        
+
         result = [hours, minutes, seconds, frames];
         if (glue === false) return result;
         result = result.join(glue || ' : ');
-
-        // add leading zero to single digits
-        return result.replace(singleDigits, '$10$2'); 
+        return result.replace(singleDigits, '$10$2'); // Add leading zero to single digits.
     }
 
     // inlined @ minification
