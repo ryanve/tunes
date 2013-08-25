@@ -3,7 +3,7 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.5.3
+ * @version   0.5.4
  * @requires  jQuery or ender
  */
 
@@ -39,56 +39,39 @@
       , rseek = '&#9658;&#9658;|'
       , lseek = '|&#9668;&#9668;'
       , singleDigits = /(^|\D)(\d\D|\d$)/g
-      , supported = (function(audio, video) {
+      , supported = (function(supported, tags) {
             // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
             // developer.mozilla.org/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements
             // github.com/Modernizr/Modernizr/blob/master/feature-detects/audio.js
             // github.com/Modernizr/Modernizr/blob/master/feature-detects/video.js
-
-            var supported = {}
-              , canPlayType = 'canPlayType' 
-              , el, name, type, test, i, o
-              , keys = [audio, video]
-              , types = {
-                    'audio': {
-                        'm4a' : ['audio/x-m4a;', 'audio/aac;']
-                      , 'wav' : ['audio/mpeg;']
-                      , 'ogg' : ['audio/ogg;codecs="vorbis"']
-                      , 'opus' : ['audio/ogg;codecs="opus"']
-                      , 'mp3' : ['audio/mpeg;']
-                     }
-                  , 'video': {
-                        'ogg' : ['video/ogg;codecs="theora"']
-                      , 'webm': ['video/webm;codecs="vp8, vorbis"']
-                      , 'mp4' : ['video/mp4;codecs="avc1.42E01E"']
-                    }
+            detect(tags, function(name, i) {
+                var ext
+                  , arr = supported[name] = []
+                  , el = document.createElement(name)
+                  , types = i ? {
+                    'ogg': ['ogg;codecs="theora"']
+                  , 'webm': ['webm;codecs="vp8,vorbis"']
+                  , 'mp4': ['mp4;codecs="avc1.42E01E"']
+                } : {
+                    'm4a': ['aac;', 'x-m4a;']
+                  , 'wav': ['mpeg;']
+                  , 'ogg': ['ogg;codecs="vorbis"']
+                  , 'opus': ['ogg;codecs="opus"']
+                  , 'mp3': ['mpeg;']
                 };
-    
-            // Make an array for each tagName that contains a prioritized list of 
-            // the supported extensions. And add flags on the array for each type.
-            // The flag will be "probably"|"maybe"|false and the array will contain
-            // only types that are "probably" or "maybe" (in that order).
-            while (name = keys.pop()) {
-                el = document.createElement(name);
-                supported[name] = [];
-                if (el[canPlayType]) {
-                    o = types[name];
-                    for (type in o) {
-                        if (!o.hasOwnProperty(type)) break; // Owned props enumerate 1st
-                        i = o[type].length; // m4a has 2 tests and the rest have 1
-                        while (i--) {
-                            test = el[canPlayType](o[type][i]);
-                            if (supported[name][type] = 'no' !== test && test || false) {
-                                supported[name]['maybe' === test ? 'push' : 'unshift'](type);
-                                break;
-                            }
-                        }
-                    }
+                if (!el.canPlayType) return;
+                name += '/';
+                for (ext in types) {
+                    types.hasOwnProperty(ext) && detect(types[ext], function(type) {
+                        var can = el.canPlayType(name + type);
+                        if (arr[ext] = 'no' !== can && can || false)
+                            return arr['maybe' === can ? 'push' : 'unshift'](ext);
+                    });
                 }
-            }
+            });
             return supported;
-        }(audio, video))
-    
+        }({}, [audio, video]))
+
       , controlsClass = 'cue-' + controls
       , controlsHtml = '<div class=' + controlsClass + '>' +
             // wrap shapes in spans so that css image replacement is possible
@@ -149,7 +132,7 @@
     }
 
     /**
-     * @param {Object}      uris   plain object containing source uris by type
+     * @param {Object}      uris  plain object containing source uris by type
      * @param {Node|string} name  DOM element or tagName "audio" or "video"
      */
     function getBestType(uris, name) {
