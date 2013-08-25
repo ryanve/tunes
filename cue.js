@@ -149,13 +149,13 @@
     }
 
     /**
-     * @param {Object}        uris   plain object containing source uris by type
-     * @param {Node|string}   el     DOM element or tagName ("audio" or "video")
+     * @param {Object}      uris   plain object containing source uris by type
+     * @param {Node|string} name  DOM element or tagName "audio" or "video"
      */
-    function getBestType(uris, el) {
-        return detect(supported[(el.nodeName || el).toLowerCase()], function(type) {
+    function getBestType(uris, name) {
+        return (name = detect(supported[(name.nodeName || name).toLowerCase()], function(type) {
             return uris[type];
-        }) || '';
+        })) ? uris[name] : '';
     }
     
     /**
