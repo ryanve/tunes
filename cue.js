@@ -11,7 +11,6 @@
   laxcomma:true, eqnull:true, undef:true, unused:true, browser:true, jquery:true, maxerr:100 */
 
 (function(root, document, undefined) {
-
     // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
     // developer.mozilla.org/en-US/docs/DOM/Media_events
 
@@ -51,7 +50,6 @@
       , lseek = '|&#9668;&#9668;'
       
       , supported = (function() {
-
             // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
             // developer.mozilla.org/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements
             // github.com/Modernizr/Modernizr/blob/master/feature-detects/audio.js
@@ -122,7 +120,6 @@
      * @return  {string}
      */
     function formatTime(seconds, glue) {
-
         seconds = seconds || 0;
         var minutes = seconds / 60
           , hours = minutes / 60
@@ -136,7 +133,7 @@
         frames  = (frames % 60).toFixed();
         
         result = [hours, minutes, seconds, frames];
-        if (glue === false) { return result; }
+        if (glue === false) return result;
         result = result.join(glue || ' : ');
 
         // add leading zero to single digits
@@ -154,22 +151,13 @@
     }
 
     /**
-     * @param {Object}         uris     plain object containing source uris by type
-     * @param {Object|string}  elem     DOM element or tagName ("audio" or "video")
-     * @uses  the `supported` feature detection object defined above
+     * @param {Object}        uris   plain object containing source uris by type
+     * @param {Node|string}   el     DOM element or tagName ("audio" or "video")
      */
-    function getBestType(uris, elem) {
-        var uri
-          , types = supported[(elem.nodeType ? elem.tagName : elem).toLowerCase()]
-          , l = types.length
-          , i = 0;
-
-        while (i < l) {
-            if (uri = uris[types[i++]]) {
-                return uri;
-            }
-        }
-        return ''; // default
+    function getBestType(uris, el) {
+        var uri, types = supported[(el.nodeType ? el.tagName : el).toLowerCase()], l = types.length, i = 0;
+        while (i < l) if (uri = uris[types[i++]]) return uri;
+        return '';
     }
     
     /**
@@ -182,7 +170,7 @@
      */
     function ess(list, fn, delim) {// or `ess(list, delim)` or `ess(list)`
         var l, v, j, i = 0, comp = [];
-        if (!list) { return comp; }
+        if (!list) return comp;
         typeof fn != 'function' && null == delim && (delim = fn) && (fn = 0);
         list = typeof list == 'string' ? list.split(delim || ' ') : list;
         l = list.length;
@@ -218,9 +206,9 @@
     function json(raw, fn, scope) {
         var object, ext = 'json';
         raw = typeof raw == 'function' ? raw.call(this) : raw;
-        if (!raw) { return; }
-        if (typeof raw != 'string') { return raw; }
-        if (!(raw = $.trim(raw))) { return; }
+        if (!raw) return;
+        if (typeof raw != 'string') return raw;
+        if (!(raw = $.trim(raw))) return;
         
         raw.substr(-5) === ('.' + ext) ? $.get(raw, function(data) {
             // asynchronous ==> call effinCue when data arrives
@@ -235,20 +223,17 @@
      * The corresponding events are added elsewhere.
      */
     function insertControls($container, $media) {
-
         $media.each(function() {
             var currControls, media = this;
         
             // quasi-respect the behavior of [controls]
             // (only add them if [controls] is present)
-            if (null == media.getAttribute(controls)) {
+            if (null == media.getAttribute(controls))
                 return;
-            }
             
             // Abort if there's already a controls element.
-            if ($container.find('.' + controlsClass).length) { 
+            if ($container.find('.' + controlsClass).length)
                 return; 
-            }
             
             // Remove native [controls] b/c we have custom controls
             media.removeAttribute(controls);
@@ -256,7 +241,7 @@
             $container.children().each(function() {
                 if (this === media || $.contains(this, media)) {
                     $controls = $controls || $(controlsHtml);
-                    return ! $controls.insertAfter(this); // break
+                    return !$controls.insertAfter(this); // break
                 }
             });
         });            
@@ -266,9 +251,7 @@
      *
      */
     function changeTrack(container, nodeList, media, tagName, playlist, amount) {
-            
         amount = amount || 0;
-
         var curr = media.currentSrc
           , ext, i = 0, idx = 0
           , next = null
@@ -290,11 +273,7 @@
 
         media['src'] = next[ext] || ''; // set the attr
         container.setAttribute('data-cue-idx', idx);
-
-        if (video === tagName) {
-            updateAttr(media, poster, next[poster]);
-        }
-        
+        video === tagName && updateAttr(media, poster, next[poster]);
         media.play();
 
         // Update fields. - for example:  `<p data-cue-insert="caption"></p>`
@@ -304,9 +283,8 @@
         // using .find(selector) each time for better performance.
         // <p data-cue-attr='{"title":"title"}'>
         each(nodeList, function() {
-        
             var n, key, attrs, insert, node = this;
-            if (!node || 1 !== node.nodeType) { return; }
+            if (!node || 1 !== node.nodeType) return;
             insert = node.getAttribute(cueInsert);
             attrs  = node.getAttribute(cueAttr);
             
@@ -318,7 +296,7 @@
             if (attrs && typeof attrs == 'string') {
                 attrs = parseJSON(attrs);
                 for (n in attrs) {
-                    if (!attrs.hasOwnProperty(n)) { break; }
+                    if (!attrs.hasOwnProperty(n)) break;
                     (key = attrs[n]) && typeof key == 'string' && updateAttr(node, n, next[key]);
                 }
             }
@@ -326,7 +304,6 @@
         });
         
         return idx;
-
     }
     
     function addMarkedEvent($container, sel, type, fn) {
@@ -355,7 +332,7 @@
 
         return each(this, function() {
             
-            if (1 !== this.nodeType) { return; }
+            if (1 !== this.nodeType) return;
 
             if (typeof inputData == 'function') {
                 // ensures that inputData is not a function below for
@@ -368,14 +345,14 @@
               , $container = $(this);
 
             cue = inputData || $container.attr('data-cue');
-            if (!cue) { return; }
+            if (!cue) return;
             cue = json(cue, effinCue, $container);
-            if (typeof cue != 'object') { return; } // async OR junk input
+            if (typeof cue != 'object') return; // async OR junk input
             cue = cue ? [].concat(cue) : [];
             
             // get the first video or audio elem (ensure $media.length === 1)
             media = $container.find(video + ',' + audio)[0];
-            if (!media) { return; }
+            if (!media) return;
             tagName = media.tagName.toLowerCase();
             $media = $(media);
             
