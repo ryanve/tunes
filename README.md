@@ -151,15 +151,13 @@ AddType video/x-flv                    flv
 [cue](http://cuejs.com) requires [jQuery](http://jquery.com/) 1.7+ or an [ender](http://ender.jit.su/) build that implements compatible versions of:
 
 - `$()`
-- `$.ajax()` (needed only if using AJAX-loaded playlists)
+- `$.ajax()` *needed only for AJAX playlists
 - `$.contains()`
-- `$.each()`
-- `$.get()`  (needed only if using AJAX-loaded playlists)
+- `$.get()`  *needed only for AJAX playlists
 - `$.fn.on()`
 - `$.fn.addClass()`
 - `$.fn.attr()`
 - `$.fn.children()`
-- `$.fn.each()`
 - `$.fn.empty()`
 - `$.fn.find()`
 - `$.fn.html()`
