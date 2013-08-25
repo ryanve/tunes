@@ -3,7 +3,7 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.5.1
+ * @version   0.5.2
  * @requires  jQuery or ender
  */
 
@@ -66,6 +66,7 @@
                         'm4a' : ['audio/x-m4a;', 'audio/aac;']
                       , 'wav' : ['audio/mpeg;']
                       , 'ogg' : ['audio/ogg;codecs="vorbis"']
+                      , 'opus' : ['audio/ogg;codecs="opus"']
                       , 'mp3' : ['audio/mpeg;']
                      }
                   , 'video': {
