@@ -155,7 +155,7 @@
      * @param {Node|string}   el     DOM element or tagName ("audio" or "video")
      */
     function getBestType(uris, el) {
-        var uri, types = supported[(el.nodeType ? el.tagName : el).toLowerCase()], l = types.length, i = 0;
+        var uri, types = supported[(el.nodeName || el).toLowerCase()], l = types.length, i = 0;
         while (i < l) if (uri = uris[types[i++]]) return uri;
         return '';
     }
