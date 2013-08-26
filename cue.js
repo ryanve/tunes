@@ -3,7 +3,7 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.5.4
+ * @version   0.5.5
  * @requires  jQuery or ender
  */
 
@@ -97,7 +97,7 @@
      * Convert seconds to HH:MM:SS:FF
      * @param   {number}           seconds
      * @param   {string|boolean=}  glue
-     * @return  {string}
+     * @return  {string|Array}
      */
     function formatTime(seconds, glue) {
         seconds = seconds || 0;
@@ -118,22 +118,29 @@
         return result.replace(singleDigits, '$10$2'); // Add leading zero to single digits.
     }
 
-    // inlined @ minification
+    // inline @ minification
     function namespace(eventName) {
         return eventName + '.cue';
     }
     
-    // inlined @ minification
+    // inline @ minification
     function isPaused(media) {
         return media.paused || media.ended;
     }
+    
+    /**
+     * @param  {Node|string} el
+     */
+    function toTagName(el) {
+        return (el.nodeName || el).toLowerCase();
+    }
 
     /**
-     * @param {Object}      uris  plain object containing source uris by type
-     * @param {Node|string} name  DOM element or tagName "audio" or "video"
+     * @param {Object}  uris  plain object containing source uris by type
+     * @param {string}  name  "audio" or "video"
      */
     function getBestType(uris, name) {
-        return (name = detect(supported[(name.nodeName || name).toLowerCase()], function(type) {
+        return (name = detect(supported[name], function(type) {
             return uris[type];
         })) ? uris[name] : '';
     }
@@ -174,7 +181,6 @@
      * @param  {string|*}     raw       JSON or filename of JSON file
      * @param  {Function=}    fn        Callback for ajax-loaded data.
      * @param  {Object=}      scope     thisArg passed to `fn`
-     * @return {Object|undefined}
      */
     function json(raw, fn, scope) {
         var object, ext = 'json';
@@ -183,7 +189,7 @@
         if (typeof raw != 'string') return raw;
         if (!(raw = trim(raw))) return;
         raw.substr(-5) === ('.' + ext) ? $.get(raw, function(data) {
-            // asynchronous ==> call effinCue when data arrives
+            // Asynchronous ==> call effinCue when data arrives
             data && fn.call(scope, data);
         }, ext) : (object = parseJSON(raw)); 
         return object; // Undefined if using $.get
@@ -293,7 +299,7 @@
             // get the first video or audio elem (ensure $media.length === 1)
             media = $container.find(video + ',' + audio)[0];
             if (!media) return;
-            tagName = media.tagName.toLowerCase();
+            tagName = toTagName(media);
             $media = $(media);
             insertControls($container, $media);
             activateTimeUpdate($container, $media);
@@ -303,7 +309,7 @@
                 this.className = 'cue-' + (paused ? 'pause' : 'play');
                 $container[paused ? add : rem](cuePlaying)[paused ? rem : add](cuePaused);
             }
-            
+
             addMarkedEvent($container, '.cue-play,.cue-pause', 'click', function() {
                 media[isPaused(media) ? 'play' : 'pause']();
             });
@@ -317,7 +323,7 @@
                     cue[i]['track-number'] = i;
                     
                     // Check for multiple src values and set props for each unique type. 
-                    // Reset src to ensure it is string|undefined for fallback usage in getBestType.
+                    // Reset src to ensure it is string|undefined for fallback usage.
                     if (srcs = cue[i]['src']) {
                         for (j = (srcs = typeof srcs == 'string' ? srcs.split(' ') : srcs).length; j--;)
                             srcs[j] && (ext = srcs[j].split('.').pop()) && (cue[i][ext] = cue[i][ext] || srcs[j]);
