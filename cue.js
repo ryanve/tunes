@@ -50,7 +50,7 @@
             '<output class=cue-time></output>'                         + 
             //'<input class=cue-needle type=range min=0 max=100 step=1 value=100>'  + 
         '</div>'
-      , supported = deduce([audio, video], function(name, i) {
+      , support = deduce([audio, video], function(name, i) {
             // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
             // developer.mozilla.org/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements
             // github.com/Modernizr/Modernizr/blob/master/feature-detects/audio.js
@@ -141,7 +141,7 @@
      * @param {string}  name  "audio" or "video"
      */
     function getBestType(uris, name) {
-        return deduce(supported[name], function(type) {
+        return deduce(support[name], function(type) {
             return uris[type];
         }) || '';
     }
