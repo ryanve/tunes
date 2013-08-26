@@ -3,27 +3,27 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.5.8
+ * @version   0.5.9
  * @requires  jQuery or ender
  */
 
 /*jshint expr:true, sub:true, supernew:true, debug:true, node:true, boss:true, devel:true, evil:true, 
   laxcomma:true, eqnull:true, undef:true, unused:true, browser:true, jquery:true, maxerr:100 */
 
-(function(root, document, undefined) {
+(function(root, window, document) {
     // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
     // developer.mozilla.org/en-US/docs/DOM/Media_events
 
     var $controls
       , require = root['require']
-      , jQuery = root['jQuery'] || (!!require && require('jquery'))
-      , $ = jQuery || root['ender'] || (!!require && require('ender'))
+      , $ = root['jQuery'] || require && require('jquery') || root['ender'] || require && require('ender')
       , trim = $['trim'] || function(s) {
             return s.replace(/^\s+|\s+$/, '');
         }
-      , nativeJSONParse = !!root['JSON'] && JSON['parse']
-      , parseJSON = $['parseJSON'] || nativeJSONParse && function(s) {
-            return typeof s == 'string' && (s = trim(s)) ? nativeJSONParse(s) : null;
+      , JSON = window['JSON']
+      , parser = $['parseJson'] || JSON && JSON['parse']
+      , parseJson = function(s) {
+            return typeof s == 'string' && (s = trim(s)) ? parser(s) : null;
         }
       , singleDigits = /(^|\D)(\d\D|\d$)/g
       , audio = 'audio'
@@ -184,7 +184,7 @@
         raw.substr(-5) === ('.' + ext) ? $.get(raw, function(data) {
             // Asynchronous ==> call effinCue when data arrives
             data && fn.call(scope, data);
-        }, ext) : (object = parseJSON(raw)); 
+        }, ext) : (object = parseJson(raw)); 
         return object; // Undefined if using $.get
     }
 
@@ -242,7 +242,7 @@
             insert = node.getAttribute(cueInsert);
             atts = node.getAttribute(cueAttr);
             null == insert || (null == (insert = next[insert]) ? $(node).empty() : $(node).html(insert));
-            if (atts = atts && typeof atts == 'string' && parseJSON(atts)) {
+            if (atts = atts && typeof atts == 'string' && parseJson(atts)) {
                 for (n in atts) {
                     if (typeof atts[n] == 'string' || typeof atts[n] == 'number') {
                         updateAttr(node, n, next[atts[n]]);
@@ -353,4 +353,4 @@
     $(document).ready(function() {
         effinCue.call($('[data-cue]')); // Use local in case public prop changes.
     });
-}(this, document));
+}(this, window, document));
