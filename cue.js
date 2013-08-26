@@ -3,7 +3,7 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.5.7
+ * @version   0.5.8
  * @requires  jQuery or ender
  */
 
@@ -147,26 +147,18 @@
     }
     
     /**
-     * ess     "each separated string" Iterate separated values. Defaults to SSV. Skips falsey values.                                   
-     * @param   {Array|Object|string|*} list   is an ssv string, array, or arr-like object to iterate
-     * @param   {(Function|*)=}         fn     is the callback - it receives (value, index, array)
-     * @param   {(RegExp|string|*)=}    delim  is a delimiter to split strings with (defaults to ssv)
-     * @return  {Array}                        new compact array containing the split values
+     * @param  {Array|Object|string|*} list  is an ssv string, array, or arr-like object
+     * @return {Array}                       new compact array containing the split values
      */
-    function ess(list, fn, delim) {// or `ess(list, delim)` or `ess(list)`
-        var l, v, j, i = 0, comp = [];
+    function compact(list) {
+        var l, i = 0, comp = [];
         if (!list) return comp;
-        typeof fn != 'function' && null == delim && (delim = fn) && (fn = 0);
-        list = typeof list == 'string' ? list.split(delim || ' ') : list;
-        for (l = list.length; i < l;) {
-            if (v = list[i++]) {
-                j = comp.push(v) - 1; // Push the value and grab its index.
-                fn && fn.call(v, v, j, comp); // `fn` can mutate `comp`
-            }
-        }
+        list = typeof list == 'string' ? list.split(' ') : list;
+        for (l = list.length; i < l; i++)
+            list[i] && comp.push(list[i]);
         return comp;
     }
-    
+
     /**
      * If the value is null, remove the attribute. Otherwise set it.
      * @param  {Object}  node
@@ -277,10 +269,18 @@
             $time.html(formatTime(this.currentTime));
         }).addClass(active).removeClass(inactive);
     }
+    
+    /**
+     * @this {Object} cue item
+     */
+    function setExtensionProps(v, x) {
+        // Repurpose index `x` to grab extension.
+        this[x = v.split('.').pop()] || (this[x] = v);
+    }
 
     /**
      * $.fn.cue()
-     * @param {(Object|string)=}  inputData
+     * @param {(Object|Function|string)=}  inputData
      */
     function effinCue(inputData) {
         deduce(this, function(container) {
@@ -290,7 +290,7 @@
                 // data at runtime. (Maybe this would be more useful to add event capabilities.)
                 return !effinCue.call([container], inputData.call(container)); // Invert to continue loop.
 
-            var $media, media, nodeList, tagName, srcs, ext, j, i, cue, $container = $(container);
+            var $media, media, nodeList, tagName, ext, j, i, cue, $container = $(container);
             cue = inputData || $container.attr('data-cue');
             if (!cue) return;
             cue = json(cue, effinCue, $container);
@@ -322,20 +322,9 @@
                 while (i--) {
                     // Add track number prop for use with [data-cue-insert]
                     cue[i]['track-number'] = i;
-                    
-                    // Check for multiple src values and set props for each unique type. 
-                    // Reset src to ensure it is string|undefined for fallback usage.
-                    if (srcs = cue[i]['src']) {
-                        for (j = (srcs = typeof srcs == 'string' ? srcs.split(' ') : srcs).length; j--;)
-                            srcs[j] && (ext = srcs[j].split('.').pop()) && (cue[i][ext] = cue[i][ext] || srcs[j]);
-                        srcs = srcs[0];
-                    }
-                    
-                    // If the 'src' is set, organize by type.
-                    ess(cue[i]['src'], function(v) {
-                        var ext = v.split('.').pop();
-                        cue[i][ext] = cue[i][ext] || v;
-                    });
+
+                    // Check for multiple 'src' values and set props for each unique type. 
+                    deduce(compact(cue[i]['src']), setExtensionProps, cue[i]);
                     
                     // Save the best type back to the 'src' prop
                     cue[i]['src'] = getBestType(cue[i], tagName);
