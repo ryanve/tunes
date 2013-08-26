@@ -3,7 +3,7 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.5.6
+ * @version   0.5.7
  * @requires  jQuery or ender
  */
 
@@ -50,27 +50,26 @@
             '<output class=cue-time></output>'                         + 
             //'<input class=cue-needle type=range min=0 max=100 step=1 value=100>'  + 
         '</div>'
-      , supported = (function(supported, tags) {
+      , supported = deduce([audio, video], function(name, i) {
             // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
             // developer.mozilla.org/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements
             // github.com/Modernizr/Modernizr/blob/master/feature-detects/audio.js
             // github.com/Modernizr/Modernizr/blob/master/feature-detects/video.js
-            deduce(tags, function(name, i) {
-                var ext
-                  , arr = supported[name] = []
-                  , el = document.createElement(name)
-                  , types = i ? {
-                    'ogg': ['ogg;codecs="theora"']
-                  , 'webm': ['webm;codecs="vp8,vorbis"']
-                  , 'mp4': ['mp4;codecs="avc1.42E01E"']
-                } : {
-                    'm4a': ['aac;', 'x-m4a;']
-                  , 'wav': ['mpeg;']
-                  , 'ogg': ['ogg;codecs="vorbis"']
-                  , 'opus': ['ogg;codecs="opus"']
-                  , 'mp3': ['mpeg;']
-                };
-                if (!el.canPlayType) return;
+            var ext
+              , arr = this[name] = []
+              , el = document.createElement(name)
+              , types = i ? {
+                'ogg': ['ogg;codecs="theora"']
+              , 'webm': ['webm;codecs="vp8,vorbis"']
+              , 'mp4': ['mp4;codecs="avc1.42E01E"']
+            } : {
+                'm4a': ['aac;', 'x-m4a;']
+              , 'wav': ['mpeg;']
+              , 'ogg': ['ogg;codecs="vorbis"']
+              , 'opus': ['ogg;codecs="opus"']
+              , 'mp3': ['mpeg;']
+            };
+            if (el.canPlayType) {
                 name += '/';
                 for (ext in types) {
                     types.hasOwnProperty(ext) && deduce(types[ext], function(type) {
@@ -79,9 +78,9 @@
                             return arr['maybe' === can ? 'push' : 'unshift'](ext); // Stop loop.
                     });
                 }
-            });
-            return supported;
-        }({}, [audio, video]));
+            }
+            return i && this;
+        }, {});
 
     /**
      * hybrid iterator blends _.some, _.detect, and _.reduce
