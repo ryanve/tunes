@@ -290,7 +290,7 @@
                 // data at runtime. (Maybe this would be more useful to add event capabilities.)
                 return !effinCue.call([container], inputData.call(container)); // Invert to continue loop.
 
-            var $media, media, nodeList, tagName, ext, j, i, cue, $container = $(container);
+            var $media, media, nodeList, tagName, i, cue, $container = $(container);
             cue = inputData || $container.attr('data-cue');
             if (!cue) return;
             cue = json(cue, effinCue, $container);
