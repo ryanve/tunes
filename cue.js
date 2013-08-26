@@ -3,7 +3,7 @@
  * @author    Ryan Van Etten <@ryanve>
  * @link      github.com/ryanve/cue
  * @license   MIT 
- * @version   0.5.5
+ * @version   0.5.6
  * @requires  jQuery or ender
  */
 
@@ -55,7 +55,7 @@
             // developer.mozilla.org/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements
             // github.com/Modernizr/Modernizr/blob/master/feature-detects/audio.js
             // github.com/Modernizr/Modernizr/blob/master/feature-detects/video.js
-            detect(tags, function(name, i) {
+            deduce(tags, function(name, i) {
                 var ext
                   , arr = supported[name] = []
                   , el = document.createElement(name)
@@ -73,10 +73,10 @@
                 if (!el.canPlayType) return;
                 name += '/';
                 for (ext in types) {
-                    types.hasOwnProperty(ext) && detect(types[ext], function(type) {
+                    types.hasOwnProperty(ext) && deduce(types[ext], function(type) {
                         var can = el.canPlayType(name + type);
-                        if (arr[ext] = 'no' !== can && can || false)
-                            return arr['maybe' === can ? 'push' : 'unshift'](ext);
+                        if (arr[ext] = 'no' !== can && can || false) // Assign string|false.
+                            return arr['maybe' === can ? 'push' : 'unshift'](ext); // Stop loop.
                     });
                 }
             });
@@ -84,13 +84,15 @@
         }({}, [audio, video]));
 
     /**
+     * hybrid iterator blends _.some, _.detect, and _.reduce
      * @param  {Object|Array|NodeList} ob
      * @param  {Function}              fn
      * @param  {*=}                    scope
      */    
-    function detect(ob, fn, scope) {
-        for (var v, i = 0, l = ob.length; i < l;)
-            if (fn.call(scope, v = ob[i], i++, ob)) return v;
+    function deduce(ob, fn, scope) {
+        for (var r, i = 0, l = ob.length; i < l;) {
+            if (r = fn.call(scope, ob[i], i++, ob)) return r;
+        }
     }
       
     /**
@@ -140,9 +142,9 @@
      * @param {string}  name  "audio" or "video"
      */
     function getBestType(uris, name) {
-        return (name = detect(supported[name], function(type) {
+        return deduce(supported[name], function(type) {
             return uris[type];
-        })) ? uris[name] : '';
+        }) || '';
     }
     
     /**
@@ -199,11 +201,11 @@
      * Insert the custom $controls markup. Corresponding events are added elsewhere.
      */
     function insertControls($container, $media) {
-        detect($media, function(media) {
+        deduce($media, function(media) {
             if (null == media.getAttribute(controls)) return; // Abort if [controls] is not present.
             if ($container.find('.' + controlsClass).length) return; // Or if we already added them.
             media.removeAttribute(controls); // Remove native [controls] b/c we have custom controls.
-            detect($container.children(), function(kid) {
+            deduce($container.children(), function(kid) {
                 if (kid === media || $.contains(kid, media)) {
                     $controls = $controls || $(controlsHtml);
                     $controls.insertAfter(kid);
@@ -243,7 +245,7 @@
         // live nodeList created by getElementsByTagName('*') rather than
         // using .find(selector) each time for better performance.
         // <p data-cue-attr='{"title":"title"}'>
-        detect(nodeList, function(node) {
+        deduce(nodeList, function(node) {
             var n, atts, insert;
             if (!node || 1 !== node.nodeType) return;
             insert = node.getAttribute(cueInsert);
@@ -282,12 +284,12 @@
      * @param {(Object|string)=}  inputData
      */
     function effinCue(inputData) {
-        detect(this, function(container) {
+        deduce(this, function(container) {
             if (1 !== container.nodeType) return;
             if (typeof inputData == 'function')
                 // Ensure that inputData is not a function for JSON, and allow devs to customize
                 // data at runtime. (Maybe this would be more useful to add event capabilities.)
-                return effinCue.call([container], inputData.call(container));
+                return !effinCue.call([container], inputData.call(container)); // Invert to continue loop.
 
             var $media, media, nodeList, tagName, srcs, ext, j, i, cue, $container = $(container);
             cue = inputData || $container.attr('data-cue');
@@ -344,7 +346,7 @@
                 nodeList = container.getElementsByTagName('*'); 
                 
                 // Attach the changeTrack handlers
-                detect(['.cue-prev', '.cue-next'], function(selector, i) {
+                deduce(['.cue-prev', '.cue-next'], function(selector, i) {
                     addMarkedEvent($container, selector, 'click', function() {
                         changeTrack(container, nodeList, media, tagName, cue, i || -1);
                     });
