@@ -14,8 +14,12 @@
     // developer.mozilla.org/en-US/docs/DOM/Media_events
 
     var $controls
-      , require = root['require']
-      , $ = root['jQuery'] || require && require('jquery') || root['ender'] || require && require('ender')
+      , $ = deduce(['jQuery', 'ender'], function(id) {
+            if (root[id]) return root[id];
+            try {
+                return require(id.toLowerCase()); 
+            } catch(e) {}
+        })
       , trim = $['trim'] || function(s) {
             return s.replace(/^\s+|\s+$/, '');
         }
