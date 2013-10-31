@@ -1,15 +1,13 @@
-# [cue](http://cuejs.com)
+# [cue](../../)
 ## Native `<audio>` and `<video>` Playlists
 
-[**cue**](http://cuejs.com) is an opensource [jQuery](http://jquery.com) plugin that uses [JSON](http://en.wikipedia.org/wiki/JSON) and [data attributes](http://dev.opera.com/articles/view/an-introduction-to-datasets/) to provide playlist capabilities to native HTML5 audio and video.
-
-**[CDN](http://airve.github.com)**: [dev](http://airve.github.com/js/cue/cue.js) | [min](http://airve.github.com/js/cue/cue.min.js)
+#### <b>cue</b> is an opensource [jQuery](http://jquery.com) plugin that uses [JSON](http://en.wikipedia.org/wiki/JSON) and [data attributes](http://dev.opera.com/articles/view/an-introduction-to-datasets/) to add playlist capabilities to native HTML5 audio and video.
 
 ### Goals
 
 1. Provide semantic storage and performant access to playlist data.
 2. Provide succinct semantic controls that can be styled in [CSS](https://github.com/ryanve/cue/blob/master/cue.css).
-3. Be minimal, but very extendable.
+3. Be minimal, but extensible.
 
 ### Types
 
@@ -18,7 +16,7 @@ Filetypes dictate compatibility. The more types you provide, the better. View th
 - **audio** - use `.mp3` and `.ogg`  - converters: [media.io](http://media.io)
 - **video** - use `.mp4` and `.webm` - converters: [ffmpeg](http://ffmpeg.org) | [Miro](http://mirovideoconverter.com) ([issues](http://stackoverflow.com/a/13449719/770127))
 
-[cue](http://cuejs.com) does not deal with Flash fallbacks for pre-HTML5 browsers. However fallbacks and graceful degradation are possible through smart use of `[data-cue-insert]` and `[data-cue-attr]`. A [vanilla diet](http://coding.smashingmagazine.com/2012/11/13/the-vanilla-web-diet/) approach is recommended.
+<b>cue</b> does not deal with Flash fallbacks for pre-HTML5 browsers. However fallbacks and graceful degradation are possible through smart use of `[data-cue-insert]` and `[data-cue-attr]`. A [vanilla diet](http://coding.smashingmagazine.com/2012/11/13/the-vanilla-web-diet/) approach is recommended.
 
 ### URIs
 
@@ -127,7 +125,7 @@ In your media objects, you can include whatever extra properties you want for us
 In order for media files to play your media server must be configured to serve the correct MIME types as described by [html5doctor.com](http://html5doctor.com/html5-audio-the-state-of-play/). The easiest way to do this is to use the [H5BP](https://github.com/h5bp/html5-boilerplate/)'s [.htaccess](https://github.com/h5bp/html5-boilerplate/blob/master/.htaccess). The needed rules in `.htaccess` are:
 
 ```
-# MIME types for audio and video files ( via h5bp.com )
+# MIME types for audio and video files (via h5bp.com)
 AddType audio/mp4                      m4a f4a f4b
 AddType audio/ogg                      oga ogg
 AddType video/mp4                      mp4 m4v f4v f4p
@@ -148,7 +146,7 @@ AddType video/x-flv                    flv
 
 ## Dependencies
 
-[cue](http://cuejs.com) requires [jQuery](http://jquery.com/) 1.7+ or an [ender](http://ender.jit.su/) build that implements compatible versions of:
+<b>cue</b> requires [jQuery](http://jquery.com/) 1.7+ or an [ender](http://ender.jit.su/) build that implements compatible versions of:
 
 - `$()`
 - `$.ajax()` *needed only for AJAX playlists

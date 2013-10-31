@@ -1,10 +1,9 @@
 /*!
- * cue.js     Native HTML5 <audio> and <video> playlists via JSON and data attributes.
- * @author    Ryan Van Etten
- * @link      github.com/ryanve/cue
- * @license   MIT 
- * @version   0.5.9
- * @requires  jQuery or ender
+ * cue.js HTML5 <audio> and <video> playlists via JSON and data attributes
+ * @version 0.5.10
+ * @author Ryan Van Etten
+ * @link http://github.com/ryanve/cue
+ * @license MIT 
  */
 
 /*jshint expr:true, sub:true, supernew:true, debug:true, node:true, boss:true, devel:true, evil:true, 
