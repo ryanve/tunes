@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tests</title>
+    <style>
+        html { font-family:sans-serif; background:#efefef; color:#111; }
+        body { width:96%; margin:auto; font-size:1em; line-height:1.6; }
+        pre, code, kbd { font-family:monospace; -moz-tab-size:4; -o-tab-size:4; tab-size:4; }
+        h3 b { font-weight:700; }
+        h3, pre b { font-weight:400; }
+        pre { padding:0 .5em; white-space:pre-line; }
+        pre span { white-space:pre-wrap; }
+        pre b { color:#008080 }
+        pre small { font-size:inherit; font-family:inherit; font-weight:lighter; color:#777; }
+        kbd { display:inline-block; padding:.2em; }
+        pre kbd { padding:0; }
+    </style>
+    <!--<link rel="stylesheet" href="../cue.css">-->
+</head>
+<body>
+    <h1>Tests</h1>
+    
+    <section id="audio">
+        <h2><code>&lt;audio&gt;</code></h2>
+        <h3><b>Example</b> from <a href="http://crimsonroad.com">crimsonroad.com</a></h3>
+        <!--
+            The URIs must exist or else it won't play.
+            Use single quotes on atts containing JSON.
+        -->
+        <figure data-cue='[{
+                "mp3": "http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.mp3"
+              , "ogg": "http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.ogg"
+              , "trackName": "Five Seconds"
+              , "artistName": "Crimson Road"
+             },{
+                "mp3": "http://crimsonroad.com/audio/crimsonroad_year-for-japan_0700040.mp3"
+              , "ogg": "http://crimsonroad.com/audio/crimsonroad_year-for-japan_0700040.ogg"
+              , "trackName": "Year For Japan"
+              , "artistName": "Crimson Road"
+            },{
+                "mp3": "http://crimsonroad.com/audio/crimsonroad_junk_0700032.mp3"
+              , "ogg": "http://crimsonroad.com/audio/crimsonroad_junk_0700032.ogg"
+              , "trackName": "Junk"
+              , "artistName": "Crimson Road"
+        }]'>
+            <audio controls>
+                <!-- Include a default track to start at. Usually it'd
+                     be the first track, but it could be a different one. -->
+                <source src="http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.mp3">
+                <source src="http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.ogg">
+
+                <!-- Non-HTML5 fallback content: -->
+                <p>To play, please <a href="http://browsehappy.com">updgrade your browser</a></p>
+                <!-- The file (download) link could be put here as a falback. Putting it in the
+                     caption serves that purpose while also making it accessible normal users. -->
+            </audio>
+            <figcaption>
+                <p> <!-- Default values correspond to the default track: -->
+                    "<span data-cue-insert="trackName">Five Seconds</span>" 
+                    <a data-cue-attr='{"href": "mp3"}' href="http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.mp3">mp3</a>
+                </p>
+            </figcaption>
+        </figure>
+    </section>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../cue.js"></script>
+</body>
+</html>
