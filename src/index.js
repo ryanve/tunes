@@ -1,14 +1,3 @@
-/*!
- * cue.js HTML5 <audio> and <video> playlists via JSON and data attributes
- * @version 0.5.10
- * @author Ryan Van Etten
- * @link http://github.com/ryanve/cue
- * @license MIT 
- */
-
-/*jshint expr:true, sub:true, supernew:true, debug:true, node:true, boss:true, devel:true, evil:true, 
-  laxcomma:true, eqnull:true, undef:true, unused:true, browser:true, jquery:true, maxerr:100 */
-
 (function(root, window, document) {
     // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
     // developer.mozilla.org/en-US/docs/DOM/Media_events
@@ -32,26 +21,26 @@
       , audio = 'audio'
       , video = 'video'
       , poster = 'poster'
-      , active = 'cue-active'
-      , inactive = 'cue-inactive'
-      , cuePaused = 'cue-paused'
-      , cuePlaying = 'cue-playing'
-      , cueInsert = 'data-cue-insert'
-      , cueAttr = 'data-cue-attr'
+      , active = 'tunes-active'
+      , inactive = 'tunes-inactive'
+      , tunesPaused = 'tunes-paused'
+      , tunesPlaying = 'tunes-playing'
+      , tunesInsert = 'data-tunes-insert'
+      , tunesAttr = 'data-tunes-attr'
       , play = '&#9658;'
       , pause = '| |'
       , rseek = '&#9658;&#9658;|'
       , lseek = '|&#9668;&#9668;'
       , controls = 'controls'
-      , controlsClass = 'cue-' + controls
+      , controlsClass = 'tunes-' + controls
       , controlsHtml = '<div class=' + controlsClass + '>' +
             // wrap shapes in spans so that css image replacement is possible
-            '<button accesskey=j class=cue-prev title=previous><span>' + lseek + '</span></button>' + 
-            '<button accesskey=p class=cue-play title=play/pause><span>' + play + '</span><span>' + pause + '</span></button>' + 
-            '<button accesskey=k class=cue-next title=next><span>' + rseek + '</span></button>' + 
-            //'<input class=cue-level type=range min=0 max step=0.01 value=0.00>'   + 
-            '<output class=cue-time></output>'                         + 
-            //'<input class=cue-needle type=range min=0 max=100 step=1 value=100>'  + 
+            '<button accesskey=j class=tunes-prev title=previous><span>' + lseek + '</span></button>' + 
+            '<button accesskey=p class=tunes-play title=play/pause><span>' + play + '</span><span>' + pause + '</span></button>' + 
+            '<button accesskey=k class=tunes-next title=next><span>' + rseek + '</span></button>' + 
+            //'<input class=tunes-level type=range min=0 max step=0.01 value=0.00>'   + 
+            '<output class=tunes-time></output>'                         + 
+            //'<input class=tunes-needle type=range min=0 max=100 step=1 value=100>'  + 
         '</div>'
       , support = deduce([audio, video], function(name, i) {
             // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
@@ -124,7 +113,7 @@
 
     // inline @ minification
     function namespace(eventName) {
-        return eventName + '.cue';
+        return eventName + '.tunes';
     }
     
     // inline @ minification
@@ -185,7 +174,7 @@
         if (typeof raw != 'string') return raw;
         if (!(raw = trim(raw))) return;
         raw.substr(-5) === ('.' + ext) ? $.get(raw, function(data) {
-            // Asynchronous ==> call effinCue when data arrives
+            // Asynchronous ==> call effinTunes when data arrives
             data && fn.call(scope, data);
         }, ext) : (object = parseJson(raw)); 
         return object; // Undefined if using $.get
@@ -229,21 +218,21 @@
             next = playlist[idx]; // playlist object
         }
         media['src'] = next[ext] || ''; // set the attr
-        container.setAttribute('data-cue-idx', idx);
+        container.setAttribute('data-tunes-idx', idx);
         video === tagName && updateAttr(media, poster, next[poster]);
         media.play();
 
-        // Update fields. - for example:  `<p data-cue-insert="caption"></p>`
+        // Update fields. - for example:  `<p data-tunes-insert="caption"></p>`
         // gets the current json caption value inserted into it. We want this to
         // be live so that it works for elems added after initialization. Use the 
         // live nodeList created by getElementsByTagName('*') rather than
         // using .find(selector) each time for better performance.
-        // <p data-cue-attr='{"title":"title"}'>
+        // <p data-tunes-attr='{"title":"title"}'>
         deduce(nodeList, function(node) {
             var n, atts, insert;
             if (!node || 1 !== node.nodeType) return;
-            insert = node.getAttribute(cueInsert);
-            atts = node.getAttribute(cueAttr);
+            insert = node.getAttribute(tunesInsert);
+            atts = node.getAttribute(tunesAttr);
             null == insert || (null == (insert = next[insert]) ? $(node).empty() : $(node).html(insert));
             if (atts = atts && typeof atts == 'string' && parseJson(atts)) {
                 for (n in atts) {
@@ -258,8 +247,8 @@
     
     function addMarkedEvent($container, sel, type, fn) {
         // Use data attrs to keep track of whether we added an event to an elem
-        // and prevent adding it again if $.fn.cue is called twice on the same elem.
-        var boolAttr = 'data-' + type + '-cue', object = {};
+        // and prevent adding it again if $.fn.tunes is called twice on the same elem.
+        var boolAttr = 'data-' + type + '-tunes', object = {};
         object[boolAttr] = '';
         return ($container.find(sel).not('[' + boolAttr + ']')
             .on(namespace(type), fn).attr(object)
@@ -267,14 +256,14 @@
     }
     
     function activateTimeUpdate($container, $media) {
-        var $time = $container.find('.cue-time');
+        var $time = $container.find('.tunes-time');
         $time.length && $media.on(namespace('timeupdate'), function() {
             $time.html(formatTime(this.currentTime));
         }).addClass(active).removeClass(inactive);
     }
     
     /**
-     * @this {Object} cue item
+     * @this {Object} tunes item
      */
     function setExtensionProps(v, x) {
         // Repurpose index `x` to grab extension.
@@ -282,23 +271,23 @@
     }
 
     /**
-     * $.fn.cue()
+     * $.fn.tunes()
      * @param {(Object|Function|string)=}  inputData
      */
-    function effinCue(inputData) {
+    function effinTunes(inputData) {
         deduce(this, function(container) {
             if (1 !== container.nodeType) return;
             if (typeof inputData == 'function')
                 // Ensure that inputData is not a function for JSON, and allow devs to customize
                 // data at runtime. (Maybe this would be more useful to add event capabilities.)
-                return !effinCue.call([container], inputData.call(container)); // Invert to continue loop.
+                return !effinTunes.call([container], inputData.call(container)); // Invert to continue loop.
 
-            var $media, media, nodeList, tagName, i, cue, $container = $(container);
-            cue = inputData || $container.attr('data-cue');
-            if (!cue) return;
-            cue = json(cue, effinCue, $container);
-            if (typeof cue != 'object') return; // Async, or junk input
-            cue = cue ? [].concat(cue) : [];
+            var $media, media, nodeList, tagName, i, tunes, $container = $(container);
+            tunes = inputData || $container.attr('data-tunes');
+            if (!tunes) return;
+            tunes = json(tunes, effinTunes, $container);
+            if (typeof tunes != 'object') return; // Async, or junk input
+            tunes = tunes ? [].concat(tunes) : [];
             
             // get the first video or audio elem (ensure $media.length === 1)
             media = $container.find(video + ',' + audio)[0];
@@ -310,50 +299,50 @@
     
             function playPause() {
                 var paused = isPaused(media), rem = 'removeClass', add = 'addClass';
-                this.className = 'cue-' + (paused ? 'pause' : 'play');
-                $container[paused ? add : rem](cuePlaying)[paused ? rem : add](cuePaused);
+                this.className = 'tunes-' + (paused ? 'pause' : 'play');
+                $container[paused ? add : rem](tunesPlaying)[paused ? rem : add](tunesPaused);
             }
 
-            addMarkedEvent($container, '.cue-play,.cue-pause', 'click', function() {
+            addMarkedEvent($container, '.tunes-play,.tunes-pause', 'click', function() {
                 media[isPaused(media) ? 'play' : 'pause']();
             });
 
             $media.on(namespace('play'), playPause);
             $media.on(namespace('pause'), playPause);
 
-            if (i = cue.length) {
+            if (i = tunes.length) {
                 while (i--) {
-                    // Add track number prop for use with [data-cue-insert]
-                    cue[i]['track-number'] = i;
+                    // Add track number prop for use with [data-tunes-insert]
+                    tunes[i]['track-number'] = i;
 
                     // Check for multiple 'src' values and set props for each unique type. 
-                    deduce(compact(cue[i]['src']), setExtensionProps, cue[i]);
+                    deduce(compact(tunes[i]['src']), setExtensionProps, tunes[i]);
                     
                     // Save the best type back to the 'src' prop
-                    cue[i]['src'] = getBestType(cue[i], tagName);
+                    tunes[i]['src'] = getBestType(tunes[i], tagName);
                 }
                 
                 // Get live reference to all elements in container
                 nodeList = container.getElementsByTagName('*'); 
                 
                 // Attach the changeTrack handlers
-                deduce(['.cue-prev', '.cue-next'], function(selector, i) {
+                deduce(['.tunes-prev', '.tunes-next'], function(selector, i) {
                     addMarkedEvent($container, selector, 'click', function() {
-                        changeTrack(container, nodeList, media, tagName, cue, i || -1);
+                        changeTrack(container, nodeList, media, tagName, tunes, i || -1);
                     });
                 });
             } else {
                 // Ensure that the attr is exactly empty for css purposes
-                // using [data-cue=""] to dim or hide the prev/next buttons
-                $container.attr('data-cue', '');
+                // using [data-tunes=""] to dim or hide the prev/next buttons
+                $container.attr('data-tunes', '');
             }
         });
         return this;
     }
-    $['fn']['cue'] = effinCue; // Public method allows for initialization of AJAX content.
+    $['fn']['tunes'] = effinTunes; // Public method allows for initialization of AJAX content.
     
     // Initialize
     $(document).ready(function() {
-        effinCue.call($('[data-cue]')); // Use local in case public prop changes.
+        effinTunes.call($('[data-tunes]')); // Use local in case public prop changes.
     });
 }(this, window, document));

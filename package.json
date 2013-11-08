@@ -1,22 +1,21 @@
 {
-    "name": "plays",
+    "name": "tunes",
     "description": "HTML5 audio and video playlists",
-    "version": "0.5.10",
-    "homepage": "https://github.com/ryanve/cue",
+    "version": "0.6.0",
+    "homepage": "https://github.com/ryanve/tunes",
     "license": "MIT",
     "author": "Ryan Van Etten",
-    "keywords": ["audio", "video", "media", "playlist"],
-    "main": "./cue.js",
+    "keywords": ["playlist", "audio", "video", "media", "browser"],
+    "main": "./tunes.js",
     "ender": "noop",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ryanve/cue.git"
+        "url": "https://github.com/ryanve/tunes.git"
     }, 
     "devDependencies": {
         "grunt": "~0.4.1",
         "grunt-contrib-uglify": "~0.2.4",
         "grunt-contrib-concat": "~0.3.0",
-        "grunt-contrib-jshint": "~0.6.4",
-        "aok": "~1.5"
+        "grunt-contrib-jshint": "~0.6.4"
     }
 }

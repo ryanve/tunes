@@ -1,12 +1,11 @@
-# [cue](../../)
+# [tunes](../../)
 ## Native `<audio>` and `<video>` Playlists
-
-#### <b>cue</b> is an opensource [jQuery](http://jquery.com) plugin that uses [JSON](http://en.wikipedia.org/wiki/JSON) and [data attributes](http://dev.opera.com/articles/view/an-introduction-to-datasets/) to add playlist capabilities to native HTML5 audio and video.
+#### <b>tunes</b> is an opensource [jQuery](http://jquery.com) plugin that uses [JSON](http://en.wikipedia.org/wiki/JSON) and [data attributes](http://dev.opera.com/articles/view/an-introduction-to-datasets/) to add playlist capabilities to native HTML5 audio and video.
 
 ### Goals
 
 1. Provide semantic storage and performant access to playlist data.
-2. Provide succinct semantic controls that can be styled in [CSS](https://github.com/ryanve/cue/blob/master/cue.css).
+2. Provide succinct semantic controls that can be styled in [CSS](tunes.css).
 3. Be minimal, but extensible.
 
 ### Types
@@ -16,19 +15,19 @@ Filetypes dictate compatibility. The more types you provide, the better. View th
 - **audio** - use `.mp3` and `.ogg`  - converters: [media.io](http://media.io)
 - **video** - use `.mp4` and `.webm` - converters: [ffmpeg](http://ffmpeg.org) | [Miro](http://mirovideoconverter.com) ([issues](http://stackoverflow.com/a/13449719/770127))
 
-<b>cue</b> does not deal with Flash fallbacks for pre-HTML5 browsers. However fallbacks and graceful degradation are possible through smart use of `[data-cue-insert]` and `[data-cue-attr]`. A [vanilla diet](http://coding.smashingmagazine.com/2012/11/13/the-vanilla-web-diet/) approach is recommended.
+<b>tunes</b> does not deal with Flash fallbacks for pre-HTML5 browsers. However fallbacks and graceful degradation are possible through smart use of `[data-tunes-insert]` and `[data-tunes-attr]`. A [vanilla diet](http://coding.smashingmagazine.com/2012/11/13/the-vanilla-web-diet/) approach is recommended.
 
 ### URIs
 
 - To simplify the examples here, most of the file URIs shown are relative. In production you probably want to use full URIs.
 - AJAX-loaded .json files must be on the same domain due to cross-domain restrictions.
 
-### [data-cue]
+### [data-tunes]
 
-`[data-cue]` is the data attribute in which the JSON playlist is stored. It is designed to be placed on a container element that holds the media element and related informational elements such as credits or captions. It can contain inline JSON **or** the filename of a .json file to load via AJAX. Inline JSON is more performant and more stable than loading AJAX requests. 
+`[data-tunes]` is the data attribute in which the JSON playlist is stored. It is designed to be placed on a container element that holds the media element and related informational elements such as credits or captions. It can contain inline JSON **or** the filename of a .json file to load via AJAX. Inline JSON is more performant and more stable than loading AJAX requests. 
 
 ```html
-<div data-cue="playlist.json">
+<div data-tunes="playlist.json">
     <video controls>
         <source src="default.mp4" type="video/mp4">
         <source src="default.webm" type="video/webm">
@@ -36,35 +35,35 @@ Filetypes dictate compatibility. The more types you provide, the better. View th
 </div>
 ```
 
-### [data-cue-insert]
+### [data-tunes-insert]
 
-`[data-cue-insert]` makes it possible to insert values from the properties in your media object into your HTML.
+`[data-tunes-insert]` makes it possible to insert values from the properties in your media object into your HTML.
 
 ```html
-<figure data-cue="playlist.json">
+<figure data-tunes="playlist.json">
     <video controls>
         <source src="default.mp4">
         <source src="default.webm">
     </video>
-    <figcaption data-cue-insert="caption">
+    <figcaption data-tunes-insert="caption">
         Caption for the default video. The value of the "caption"
         property gets inserted here when the video changes.
     </figcaption>
 </figure>
 ```
 
-### [data-cue-attr]
+### [data-tunes-attr]
 
-`[data-cue-attr]` makes it possible to update arbitrary HTML attributes based on the properties in your media object. It takes a JSON object that maps attribute names to the property names from the media object that should fill them.
+`[data-tunes-attr]` makes it possible to update arbitrary HTML attributes based on the properties in your media object. It takes a JSON object that maps attribute names to the property names from the media object that should fill them.
 
 ```html
-<figure data-cue="playlist.json">
+<figure data-tunes="playlist.json">
     <video controls>
         <source src="default.mp4">
         <source src="default.webm">
         <p>
             To watch this video please <a href="http://browsehappy.com">updgrade your browser</a>
-            or <a href="default.mp4" data-cue-attr='{"href": "mp4"}'>download the .mp4</a>
+            or <a href="default.mp4" data-tunes-attr='{"href": "mp4"}'>download the .mp4</a>
         </p>
     </video>
 </figure>
@@ -87,7 +86,7 @@ The format for the JSON playlist data is an array of "media objects" containing 
 }]
 ```
 
-**Alternate syntax:** You can achieve the same as above by setting the `src` property to an array of URIs. If you mix the 2 syntaxes, the named extension props take precedence over the `src` prop. In either case **cue** will choose the most appropriate file based on the feature detection.
+**Alternate syntax:** You can achieve the same as above by setting the `src` property to an array of URIs. If you mix the 2 syntaxes, the named extension props take precedence over the `src` prop. In either case **tunes** will choose the most appropriate file based on the feature detection.
 
 ```json
 [{
@@ -99,7 +98,7 @@ The format for the JSON playlist data is an array of "media objects" containing 
 }]
 ```
 
-In your media objects, you can include whatever extra properties you want for use with `[data-cue-insert]` and/or `[data-cue-attr]`. The purpose of these attributes is to enable you to include relavent credits, captions, or links.
+In your media objects, you can include whatever extra properties you want for use with `[data-tunes-insert]` and/or `[data-tunes-attr]`. The purpose of these attributes is to enable you to include relavent credits, captions, or links.
 
 ```json
 [{
@@ -138,15 +137,15 @@ AddType video/x-flv                    flv
 
 1. Does your JSON validate? Use: [jsonlint.com](http://jsonlint.com)
 2. Does your HTML validate? Use: [html5.validator.nu](http://html5.validator.nu)
-3. Did jQuery load? Is it version 1.7 or higher? jQuery must run *before* cue.
+3. Did jQuery load? Is it version 1.7 or higher? jQuery must run *before* tunes.
 4. Are there any JavaScript errors in the console?
 5. Is your server configured to serve the correct MIME types? See section above.
 6. Are your URIs correct? AJAX-loaded playlists must be on the same server.
-7. Ask [@ryanve](http://twitter.com/ryanve) or [submit an issue](https://github.com/ryanve/cue/issues).
+7. Ask [@ryanve](http://twitter.com/ryanve) or [submit an issue](https://github.com/ryanve/tunes/issues).
 
 ## Dependencies
 
-<b>cue</b> requires [jQuery](http://jquery.com/) 1.7+ or an [ender](http://ender.jit.su/) build that implements compatible versions of:
+<b>tunes</b> requires [jQuery](http://jquery.com/) 1.7+ or an [ender](http://ender.jit.su/) build that implements compatible versions of:
 
 - `$()`
 - `$.ajax()` *needed only for AJAX playlists
@@ -172,8 +171,6 @@ AddType video/x-flv                    flv
 - [MDN: Media Events](https://developer.mozilla.org/en-US/docs/DOM/Media_events)
 - [MDN: HTMLMediaElement](https://developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement)
 
-## License
+## License: [MIT](http://opensource.org/licenses/MIT)
 
-### [cue](http://github.com/ryanve/cue) is available under the [MIT license](http://en.wikipedia.org/wiki/MIT_License)
-
-Copyright (C) 2012 by [Ryan Van Etten](https://github.com/ryanve)
+Copyright (C) 2013 by [Ryan Van Etten](https://github.com/ryanve)

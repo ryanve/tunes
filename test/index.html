@@ -15,7 +15,6 @@
         kbd { display:inline-block; padding:.2em; }
         pre kbd { padding:0; }
     </style>
-    <!--<link rel="stylesheet" href="../cue.css">-->
 </head>
 <body>
     <h1>Tests</h1>
@@ -27,7 +26,7 @@
             The URIs must exist or else it won't play.
             Use single quotes on atts containing JSON.
         -->
-        <figure data-cue='[{
+        <figure data-tunes='[{
                 "mp3": "http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.mp3"
               , "ogg": "http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.ogg"
               , "trackName": "Five Seconds"
@@ -56,14 +55,14 @@
             </audio>
             <figcaption>
                 <p> <!-- Default values correspond to the default track: -->
-                    "<span data-cue-insert="trackName">Five Seconds</span>" 
-                    <a data-cue-attr='{"href": "mp3"}' href="http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.mp3">mp3</a>
+                    "<span data-tunes-insert="trackName">Five Seconds</span>" 
+                    <a data-tunes-attr='{"href": "mp3"}' href="http://crimsonroad.com/audio/crimsonroad_five-seconds_0700054.mp3">mp3</a>
                 </p>
             </figcaption>
         </figure>
     </section>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="../cue.js"></script>
+    <script src="../src/index.js"></script>
 </body>
 </html>
