@@ -61,11 +61,11 @@
 <script src="../src/index.js"></script>
 <script>
   !function() {
+    var reps = ['enable', 'disable']
     var button = document.getElementById('skin-toggle')
     button.onclick = function() {
-      var reps = ['enable', 'disable']
-        , skin = document.getElementById('skin')
-        , text = button.innerHTML
+      var skin = document.getElementById('skin')
+      var text = button.innerHTML
       if (skin.disabled = !skin.disabled) reps.sort()
       button.innerHTML = text.replace.apply(text, reps)    
     }
