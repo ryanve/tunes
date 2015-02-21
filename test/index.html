@@ -2,13 +2,18 @@
 <title>Tests</title>
 <style>
   html { font-family:sans-serif; background:#efefef; color:#111; }
-  body { width:96%; margin:auto; font-size:1em; line-height:1.6; }
+  body { width:96%; margin:auto; font-size:1em; line-height:1; }
   pre, code, kbd { font-family:monospace; -moz-tab-size:4; -o-tab-size:4; tab-size:4; }
   h3 b { font-weight:700; }
   h3, pre b { font-weight:400; }
 </style>
+<link disabled id="skin" rel="stylesheet" href="../tunes.css">
 
-<h1>Tests</h1>
+<header>
+  <h1>Tests</h1>
+  <button id="skin-toggle">enable skin</button>
+</header>
+
 <section id="audio">
   <h2><code>&lt;audio&gt;</code></h2>
   <h3><b>Example</b> from <a href="http://crimsonroad.com">crimsonroad.com</a></h3>
@@ -54,3 +59,15 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="../src/index.js"></script>
+<script>
+  !function() {
+    var button = document.getElementById('skin-toggle')
+    button.onclick = function() {
+      var reps = ['enable', 'disable']
+        , skin = document.getElementById('skin')
+        , text = button.innerHTML
+      if (skin.disabled = !skin.disabled) reps.sort()
+      button.innerHTML = text.replace.apply(text, reps)    
+    }
+  }();
+</script>
