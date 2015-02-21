@@ -1,10 +1,9 @@
 /*!
- * tunes 0.6.0+201311082144
+ * tunes 0.6.1+201502211926
  * https://github.com/ryanve/tunes
- * MIT License 2013 Ryan Van Etten
+ * MIT License (c) 2015 Ryan Van Etten
  */
-
-(function(root, window, document) {
+!function(root, window, document) {
     // developer.mozilla.org/en-US/docs/DOM/HTMLMediaElement
     // developer.mozilla.org/en-US/docs/DOM/Media_events
 
@@ -42,7 +41,8 @@
       , controlsHtml = '<div class=' + controlsClass + '>' +
             // wrap shapes in spans so that css image replacement is possible
             '<button accesskey=j class=tunes-prev title=previous><span>' + lseek + '</span></button>' + 
-            '<button accesskey=p class=tunes-play title=play/pause><span>' + play + '</span><span>' + pause + '</span></button>' + 
+            '<button accesskey=p class=tunes-play title=play/pause><span>' + play + '</span><span>' + 
+            pause + '</span></button>' + 
             '<button accesskey=k class=tunes-next title=next><span>' + rseek + '</span></button>' + 
             //'<input class=tunes-level type=range min=0 max step=0.01 value=0.00>'   + 
             '<output class=tunes-time></output>'                         + 
@@ -351,4 +351,4 @@
     $(document).ready(function() {
         effinTunes.call($('[data-tunes]')); // Use local in case public prop changes.
     });
-}(this, window, document));
+}(this, window, document);

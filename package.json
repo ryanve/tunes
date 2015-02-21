@@ -1,7 +1,7 @@
 {
     "name": "tunes",
     "description": "HTML5 audio and video playlists",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "homepage": "https://github.com/ryanve/tunes",
     "license": "MIT",
     "author": "Ryan Van Etten",
@@ -13,9 +13,39 @@
         "url": "https://github.com/ryanve/tunes.git"
     }, 
     "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-contrib-uglify": "~0.2.4",
-        "grunt-contrib-concat": "~0.3.0",
-        "grunt-contrib-jshint": "~0.6.4"
-    }
+        "grunt-contrib-uglify": "~0.8.0",
+        "grunt-contrib-concat": "~0.5.0",
+        "grunt-contrib-jshint": "~0.11.0",
+        "universal": "~0.1.0"
+    },
+  "jshintConfig": {
+    "asi": false,
+    "boss": true,
+    "browser": true,
+    "debug": true,
+    "devel": true,
+    "eqnull": true,
+    "evil": true,
+    "expr": true,
+    "globals": {
+      "define": true,
+      "ender": true 
+    },
+    "jquery": true,
+    "lastsemic": true,
+    "latedef": "nofunc",
+    "laxcomma": true,
+    "loopfunc": true,
+    "maxcomplexity": 15,
+    "maxerr": 10,
+    "maxlen": 115,
+    "maxparams": 6,
+    "node": true,
+    "sub": true,
+    "supernew": true,
+    "trailing": true,
+    "undef": true,
+    "unused": true,
+    "worker": true
+  }
 }
